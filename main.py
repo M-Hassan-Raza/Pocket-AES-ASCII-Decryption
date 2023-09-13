@@ -75,6 +75,7 @@ def main():
 
     ascii_array = convert_to_ascii_array(binary_array)
     print("Decrypted data = ", ascii_array)
+    write_ascii_to_file(ascii_array, "plaintext.txt"")
 
 
 def decrypt_data(cipher_text_binary_value, decryption_key):
@@ -132,16 +133,16 @@ def read_file_into_array(filename):
         print(f"Error: File '{filename}' not found.")
         return []
 
-def write_ascii_to_file(ascii_data, filename='plaintext.txt'):
+
+def write_ascii_to_file(ascii_data, filename="plaintext.txt"):
     try:
-        with open(filename, 'w', encoding='UTF-8') as file:
+        with open(filename, "w", encoding="UTF-8") as file:
             for ascii_value in ascii_data:
                 file.write(ascii_value)
 
-        print(f'ASCII data written to {filename}')
-    except Exception as e:
-        print(f'Error writing to {filename}: {str(e)}')
-
+        print(f"ASCII data written to {filename}")
+    except Exception as exception_caught:
+        print(f"Error writing to {filename}: {str(e)}")
 
 
 def hex_to_binary(hex_value):
