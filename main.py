@@ -58,9 +58,7 @@ def main():
 
     filename = "secret.txt"
     result = read_file_into_array(filename)
-    print("Encrypted data = ", result)
     binary_array = convert_to_binary_array(result)
-    print("\n\nBinary data = ", binary_array)
 
     decryption_key = input("Enter the decryption key = ")
     if len(decryption_key) > 4:
@@ -70,12 +68,11 @@ def main():
     decryption_key_binary_value = bin(int(decryption_key, 16))[2:].zfill(16)
     decrypted_data = ""
     for word in binary_array:
-        print("Decrypting word = ", word)
         decrypted_data += decrypt_data(word, decryption_key_binary_value)
 
-    ascii_array = convert_to_ascii_array(binary_array)
+    ascii_array = convert_hex_pairs_to_ascii(decrypted_data)
     print("Decrypted data = ", ascii_array)
-    write_ascii_to_file(ascii_array, "plaintext.txt"")
+    write_ascii_to_file(ascii_array, "plaintext.txt")
 
 
 def decrypt_data(cipher_text_binary_value, decryption_key):
@@ -162,31 +159,21 @@ def convert_to_binary_array(hex_array):
     return binary_array
 
 
-def binary_to_ascii(binary_value):
-    # Split the 16-bit binary into two 8-bit segments
-    binary_segments = [
-        binary_value[i : i + 8] for i in range(0, len(binary_value), 8)
-    ]
+def convert_hex_pairs_to_ascii(input_string):
+    ascii_result = []
 
-    ascii_characters = []
-    for segment in binary_segments:
-        # Convert each 8-bit binary segment to its decimal value
-        decimal_value = int(segment, 2)
+    # Iterate through the string in steps of 2 characters
+    for i in range(0, len(input_string), 2):
+        # Extract a pair of characters
+        pair = input_string[i : i + 2]
 
-        # Convert the decimal value to its corresponding ASCII character
-        ascii_char = chr(decimal_value)
+        # Convert the pair to ASCII values and append to the result
+        ascii_result.extend([chr(int(pair, 16))])
 
-        ascii_characters.append(ascii_char)
+    # Join the ASCII characters into a single string
+    ascii_string = "".join(ascii_result)
 
-    return "".join(ascii_characters)
-
-
-def convert_to_ascii_array(binary_array):
-    ascii_array = []
-    for binary_value in binary_array:
-        ascii_value = binary_to_ascii(binary_value)
-        ascii_array.append(ascii_value)
-    return ascii_array
+    return ascii_string
 
 
 def sub_nibbles_func(binary_value):
