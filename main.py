@@ -154,8 +154,6 @@ def write_ascii_to_file(ascii_data, filename="plaintext.txt"):
         print(f"Error: Unable to encode ASCII data to UTF-8 for '{filename}'.")
     except TypeError:
         print("Error: Invalid data format. 'ascii_data' must be an iterable.")
-    except Exception as exception_caught:
-        print(f"Error writing to {filename}: {str(exception_caught)}")
 
 
 def hex_to_binary(hex_value):
