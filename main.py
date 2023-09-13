@@ -132,17 +132,34 @@ def read_file_into_array(filename):
 
 
 def write_ascii_to_file(ascii_data, filename="plaintext.txt"):
+    """This function writes the ASCII data to a file."""
     try:
         with open(filename, "w", encoding="UTF-8") as file:
             for ascii_value in ascii_data:
                 file.write(ascii_value)
 
         print(f"ASCII data written to {filename}")
+
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+    except PermissionError:
+        print(f"Error: Permission denied while writing to '{filename}'.")
+    except IsADirectoryError:
+        print(f"Error: '{filename}' is a directory, not a regular file.")
+    except OSError as exception_caught:
+        print(
+            f"Error: An OS error occurred while writing to '{filename}': {str(exception_caught)}"
+        )
+    except UnicodeEncodeError:
+        print(f"Error: Unable to encode ASCII data to UTF-8 for '{filename}'.")
+    except TypeError:
+        print("Error: Invalid data format. 'ascii_data' must be an iterable.")
     except Exception as exception_caught:
-        print(f"Error writing to {filename}: {str(e)}")
+        print(f"Error writing to {filename}: {str(exception_caught)}")
 
 
 def hex_to_binary(hex_value):
+    """This function converts a hexadecimal value to its binary representation."""
     binary_value = ""
     for char in hex_value:
         # Convert each hexadecimal character to its 4-bit binary representation
@@ -152,6 +169,7 @@ def hex_to_binary(hex_value):
 
 
 def convert_to_binary_array(hex_array):
+    """This function converts an array of hexadecimal values to binary values."""
     binary_array = []
     for hex_value in hex_array:
         binary_value = hex_to_binary(hex_value)
@@ -160,6 +178,7 @@ def convert_to_binary_array(hex_array):
 
 
 def convert_hex_pairs_to_ascii(input_string):
+    """This function converts a string of hexadecimal pairs to ASCII characters."""
     ascii_result = []
 
     # Iterate through the string in steps of 2 characters
