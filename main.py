@@ -84,8 +84,6 @@ def decrypt_data(cipher_text_binary_value, decryption_key):
 
     # Round 1
     shifted_rows_data = shift_rows(cipher_text_binary_value)
-    shifted_rows_data = "".join(shifted_rows_data)
-    shifted_rows_data = bin(int(shifted_rows_data, 16))[2:].zfill(16)
     after_round_key_xor_data = bitwise_xor(shifted_rows_data, round_key_two)
     sub_nibbles_data = sub_nibbles_func(after_round_key_xor_data)
     sub_nibbles_data = "".join(sub_nibbles_data)
@@ -251,13 +249,13 @@ def shift_rows(binary_value):
     """This function performs the shift rows operation."""
     nibbles = [binary_value[i : i + 4] for i in range(0, len(binary_value), 4)]
     nibbles[0], nibbles[2] = nibbles[2], nibbles[0]
-    shifted_binary_value = []
-    for binary_value in nibbles:
-        hex_value = hex(int(binary_value, 2))[2:]
-        shifted_binary_value.append(hex_value)
+    # shifted_binary_value = []
+    # for binary_value in nibbles:
+    #     hex_value = hex(int(binary_value, 2))[2:]
+    #     shifted_binary_value.append(hex_value)
 
-    binary_value = "".join(shifted_binary_value)
-    return shifted_binary_value
+    binary_value = "".join(nibbles)
+    return binary_value
 
 
 def mix_columns(hex_input_value):
